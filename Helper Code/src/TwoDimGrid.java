@@ -117,7 +117,13 @@ public class TwoDimGrid extends JPanel implements GridColors {
      */
     public void recolor(Color tempColor, Color newColor) {
 
-	   //...
+	   for (int x = 0; x < nCols; x++){
+	       for (int y = 0; y < nRows; y++){
+	           if(theGrid[x][y].getBackground() == tempColor){
+	               theGrid[x][y].setBackground(newColor);
+               }
+           }
+       }
 
         repaint();
     }

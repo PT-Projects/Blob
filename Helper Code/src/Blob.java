@@ -24,16 +24,32 @@ public class Blob implements GridColors  {
      * @return The number of cells in the blob that contains (x, y)
      */
     public int countCells(int row, int col) {
-        int result;
-       
-        //...
-        
-        return 0;
+        int result = 0;
+        boolean start = false;
+
+        if (grid.getColor(row,col) != GridColors.BACKGROUND){
+            start = true;
+        }
+
+        if (start) {
+            for (int x = 0; x < grid.getNCols(); x++) {
+                for (int y = 0; y < grid.getNRows(); y++) {
+                    if (row - 1 == x && col - 1 == y || row - 1 == x && col == y || row - 1 == x && col + 1 == y || row == x && col - 1 == y || row == x && col == y || row == x && col + 1 == y || row + 1 == x && col - 1 == y || row + 1 == x && col == y || row + 1 == x && col + 1 == y) {
+                        if (grid.getColor(x, y) == GridColors.ABNORMAL) {
+                            grid.recolor(x, y, GridColors.TEMPORARY);
+                            result++;
+                            result += countCells(x, y);
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
     }
     
     public void restore() {
         grid.recolor(TEMPORARY, ABNORMAL);
     }
-
 
 }
